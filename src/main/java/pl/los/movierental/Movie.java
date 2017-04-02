@@ -1,23 +1,33 @@
 package pl.los.movierental;
 
 import lombok.*;
+import org.jetbrains.annotations.Contract;
 
 /**
  * Created by jagod on 01.04.2017.
  */
 
 @AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
+@ToString
 public class Movie {
-    private int id;
-    private String title;
-    private String director;
-    private String duration;
-    private Category category;
-    private double price;
-    private int numberOfMovieAvailable;
+    protected int id;
+    protected String title;
+    protected String director;
+    protected String duration;
+    protected Category category;
+    protected double price;
+    protected int numberOfMovieAvailable;
+    protected static int nextId = 0;
+
+    public Movie(int id) {
+        this.id = nextId++;
+    }
+
+   public static int getId(int id) {
+        return id;
+    }
 
     public boolean isAvailable() {
         return numberOfMovieAvailable > 0;
