@@ -1,15 +1,18 @@
-package pl.los.movierental;
+package pl.los.movierental.impl;
 
 import lombok.*;
+import pl.los.model.Customer;
+import pl.los.model.Movie;
+import pl.los.model.Rent;
+import pl.los.movierental.Rental;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by jagod on 01.04.2017.
  */
-@Data
-@Getter
-@Setter
+@ToString
 public class InMemoryRental implements Rental {
 
     private ArrayList<Customer> customersList = new ArrayList<Customer>();
@@ -17,37 +20,36 @@ public class InMemoryRental implements Rental {
     private ArrayList<Rent> rentsList = new ArrayList<Rent>();
 
     public InMemoryRental() {
-        Movie movie = new Movie(1, "Intouchables", "Oliver Nakache", "133", Category.COMEDY, 10, 3);
+        Movie movie = new Movie("Intouchables", "Oliver Nakache", 133, 10, 3);
         Customer customer = new Customer(1, "John", "Black", "34567890", 0);
-        Movie movie1 = new Movie(2, "Saw", "James Wan", "103", Category.HORROR, 7, 1);
+        Movie movie1 = new Movie("Saw", "James Wan", 103, 7, 1);
         Customer customer1 = new Customer(2, "Anna", "Black", "44567890", 0);
-        Rent rent = new Rent(2, 2, "13.02.2017", "23.02.2017");
+        Rent rent = new Rent(2, 2, new Date());
         moviesList.add(movie);
         moviesList.add(movie1);
         customersList.add(customer);
+        customersList.add(customer1);
+        rentsList.add(rent);
+    }
 
+    public Movie getMovie(int id){
+        return moviesList.remove(id);
     }
 
     public void addMovie(Movie movie) {
         moviesList.add(movie);
     }
 
-    public void deleteMovie(Movie movie) {
-        moviesList.remove(movie);
-    }
-
-    public void showAllMovies() {
-        for (Movie m : moviesList) {
-            System.out.println(m);
-        }
+    public void deleteMovie(int id) {
+        moviesList.remove(id);
     }
 
     public void addCustomer(Customer customer) {
         customersList.add(customer);
     }
 
-    public void deleteCustomer(Customer customer) {
-        customersList.remove(customer);
+    public void deleteCustomer(int id) {
+        customersList.remove(id);
     }
 
     public void showAllCustomers() {
@@ -68,15 +70,12 @@ public class InMemoryRental implements Rental {
     public ArrayList<Rent> showAllRents() {
         return rentsList;
     }
+
+    public ArrayList<Movie> showAllMovies(){
+        return moviesList;
+    }
 }
 
-//    public Movie getMovieId(int id) {
-//        return moviesList.get(id);
-//    }
-//
-//    public Customer getCustomerId(int id) {
-//        return customersList.get(id);
-//    }
 
 
 

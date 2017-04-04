@@ -1,5 +1,9 @@
 package pl.los.movierental;
 
+import pl.los.model.Customer;
+import pl.los.model.Movie;
+import pl.los.model.Rent;
+
 import java.util.ArrayList;
 
 /**
@@ -7,11 +11,11 @@ import java.util.ArrayList;
  */
 public interface Rental {
     void addMovie(Movie movie);
-    void deleteMovie(Movie movie);
-    void showAllMovies();
+    void deleteMovie(int id);
+    ArrayList<Movie> showAllMovies();
 
     void addCustomer(Customer customer);
-    void deleteCustomer(Customer customer);
+    void deleteCustomer(int id);
     void showAllCustomers();
 
     void addRent(Rent rent);
