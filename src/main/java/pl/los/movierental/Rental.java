@@ -1,5 +1,7 @@
 package pl.los.movierental;
 
+import pl.los.NoCustomerFoundException;
+import pl.los.exception.NoMovieFoundException;
 import pl.los.model.Customer;
 import pl.los.model.Movie;
 import pl.los.model.Rent;
@@ -10,15 +12,15 @@ import java.util.ArrayList;
  * Created by jagod on 01.04.2017.
  */
 public interface Rental {
-    void addMovie(Movie movie);
-    void deleteMovie(int id);
-    ArrayList<Movie> showAllMovies();
+    public void addMovie(Movie movie);
+    public void deleteMovie(int id) throws NoMovieFoundException;
+    public ArrayList<Movie> showAllMovies();
 
-    void addCustomer(Customer customer);
-    void deleteCustomer(int id);
-    void showAllCustomers();
+    public void addCustomer(Customer customer);
+    public void deleteCustomer(int id) throws NoCustomerFoundException;
+    public ArrayList<Customer> showAllCustomers();
 
-    void addRent(Rent rent);
-    void deleteRent(Rent rent);
-    ArrayList<Rent> showAllRents ();
+    public void addRent(Rent rent);
+    public void deleteRent(Rent rent);
+    public ArrayList<Rent> showAllRents ();
 }

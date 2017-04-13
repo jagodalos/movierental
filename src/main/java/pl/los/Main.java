@@ -1,6 +1,8 @@
 package pl.los;
 
 
+import pl.los.exception.NoMovieFoundException;
+import pl.los.model.Customer;
 import pl.los.model.Movie;
 import pl.los.model.Rent;
 import pl.los.movierental.impl.InMemoryRental;
@@ -13,7 +15,7 @@ public class Main {
     private static InMemoryRental rental = new InMemoryRental();
     private static Scanner scr = new Scanner(System.in);
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws NoMovieFoundException, NoCustomerFoundException {
 
 
         while (true) {
@@ -38,8 +40,39 @@ public class Main {
                 case 4:
                     printAllMovies();
                     break;
+                case 5:
+                    addNewCustomer();
+                    break;
+                case 6:
+                    deleteCustomer();
+                    break;
+                case 7:
+                    printAllCustomers();
+                    break;
             }
         }
+    }
+
+    private static void printAllCustomers() {
+        for (Customer c : rental.showAllCustomers()) {
+            System.out.println(c);
+        }
+    }
+
+    private static void deleteCustomer() throws NoCustomerFoundException {
+        System.out.println("Please enter customer's id: ");
+        int id = scr.nextInt();
+        rental.deleteCustomer(id);
+    }
+
+    private static void addNewCustomer() {
+        System.out.println("Name: ");
+        String name = scr.nextLine();
+        System.out.println("Surname: ");
+        String surname = scr.nextLine();
+        System.out.println("Pesel: ");
+        String pesel = scr.nextLine();
+        rental.addCustomer(new Customer(name, surname, pesel));
     }
 
     private static void printAllMovies() {
@@ -47,8 +80,8 @@ public class Main {
             System.out.println(m);
     }
 
-    private static void deleteMovie() {
-        System.out.println("Please enter model's id: ");
+    private static void deleteMovie() throws NoMovieFoundException {
+        System.out.println("Please enter movie's id: ");
         int id = scr.nextInt();
         rental.deleteMovie(id);
     }
@@ -60,12 +93,10 @@ public class Main {
         String director = scr.nextLine();
         System.out.println("Duration: ");
         int duration = scr.nextInt();
-
         System.out.println("Price): ");
         double price = scr.nextInt();
         System.out.println("Number of movies available: ");
         int numberOfMovieAvailable = scr.nextInt();
-
         rental.addMovie(new Movie(title, director, duration, price, numberOfMovieAvailable));
     }
 
@@ -97,7 +128,7 @@ public class Main {
         System.out.println("Enter customer id: ");
         int customerId = scr.nextInt();
         System.out.println("Thank you !");
-        rental.addRent(new Rent(movieId, customerId, new Date()));
+        rental.addRent(new Rent( rental.getCustomer(customerId), rental.getMovie(movieId), new Date()));
     }
 
 }

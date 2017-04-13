@@ -12,24 +12,24 @@ import java.util.Date;
 @ToString
 public class Rent {
 
-    private int customerId;
-    private int movieId;
+    private Customer customer;
+    private Movie movie;
     private Date rentalDate;
     private Date returnDate;
 
-    public Rent(int customerId, int movieId, Date rentalDate) {
-        this.customerId = customerId;
-        this.movieId = movieId;
-        this.rentalDate = new Date();
+    public Rent(Customer customer, Movie movie, Date rentalDate) {
+        this.customer = customer;
+        this.movie = movie;
+        this.rentalDate = rentalDate;
         this.returnDate = DateUtil.addDays(rentalDate, 7);
     }
 
-    public int getCustomerId() {
-        return customerId;
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public int getMovieId() {
-        return movieId;
+    public Movie getMovie() {
+        return movie;
     }
 
     public Date getRentalDate() {

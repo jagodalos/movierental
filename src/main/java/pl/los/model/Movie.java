@@ -14,7 +14,7 @@ public class Movie {
     private int duration;
     private double price;
     private int numberOfMovieAvailable;
-    private int nextId = 0;
+    private static int nextId = 0;
 
     public Movie(String title, String director, int duration, double price, int numberOfMovieAvailable) {
         this.id = nextId++;

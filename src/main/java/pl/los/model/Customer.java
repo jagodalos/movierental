@@ -14,12 +14,17 @@ public class Customer {
     private String pesel;
     private int nextId;
 
-    public Customer(int id, String name, String surname, String pesel, int nextId) {
+    public Customer(int id, String name, String surname, String pesel) {
         this.id = nextId++;
         this.name = name;
         this.surname = surname;
         this.pesel = pesel;
-        this.nextId = nextId;
+    }
+
+    public Customer(String name, String surname, String pesel) {
+        this.name = name;
+        this.surname = surname;
+        this.pesel = pesel;
     }
 
     public int getId() {

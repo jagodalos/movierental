@@ -1,6 +1,8 @@
 package pl.los.movierental.impl;
 
 import lombok.*;
+import pl.los.NoCustomerFoundException;
+import pl.los.exception.NoMovieFoundException;
 import pl.los.model.Customer;
 import pl.los.model.Movie;
 import pl.los.model.Rent;
@@ -21,10 +23,10 @@ public class InMemoryRental implements Rental {
 
     public InMemoryRental() {
         Movie movie = new Movie("Intouchables", "Oliver Nakache", 133, 10, 3);
-        Customer customer = new Customer(1, "John", "Black", "34567890", 0);
+        Customer customer = new Customer(1, "John", "Black", "34567890");
         Movie movie1 = new Movie("Saw", "James Wan", 103, 7, 1);
-        Customer customer1 = new Customer(2, "Anna", "Black", "44567890", 0);
-        Rent rent = new Rent(2, 2, new Date());
+        Customer customer1 = new Customer(2, "Anna", "Black", "44567890");
+        Rent rent = new Rent(customer1, movie1, new Date());
         moviesList.add(movie);
         moviesList.add(movie1);
         customersList.add(customer);
@@ -32,30 +34,46 @@ public class InMemoryRental implements Rental {
         rentsList.add(rent);
     }
 
-    public Movie getMovie(int id){
-        return moviesList.remove(id);
+    public Movie getMovie(int id) {
+        return moviesList.get(id);
+    }
+
+
+    public Rent getRent(int id) {
+        return rentsList.get(id);
+    }
+
+
+
+    public Customer getCustomer(int id) {
+        return customersList.get(id);
     }
 
     public void addMovie(Movie movie) {
         moviesList.add(movie);
     }
 
-    public void deleteMovie(int id) {
-        moviesList.remove(id);
+    public void deleteMovie(int id) throws NoMovieFoundException {
+        try {
+            moviesList.remove(id);
+        } catch(IndexOutOfBoundsException e) {
+            throw new NoMovieFoundException();
+        }
     }
 
     public void addCustomer(Customer customer) {
         customersList.add(customer);
     }
 
-    public void deleteCustomer(int id) {
+    public void deleteCustomer(int id) throws NoCustomerFoundException {
+        if (customersList.get(id) == null)
+            throw new NoCustomerFoundException();
+
         customersList.remove(id);
     }
 
-    public void showAllCustomers() {
-        for (Customer c : customersList) {
-            System.out.println(c);
-        }
+    public ArrayList<Customer> showAllCustomers() {
+        return customersList;
     }
 
     public void addRent(Rent rent) {
@@ -66,12 +84,11 @@ public class InMemoryRental implements Rental {
         rentsList.remove(rent);
     }
 
-
     public ArrayList<Rent> showAllRents() {
         return rentsList;
     }
 
-    public ArrayList<Movie> showAllMovies(){
+    public ArrayList<Movie> showAllMovies() {
         return moviesList;
     }
 }
